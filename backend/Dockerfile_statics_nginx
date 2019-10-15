@@ -1,0 +1,12 @@
+# Step 1: collect django statics
+FROM python:3.7 as static-collector
+WORKDIR /usr/app
+COPY . .
+RUN pip install pipenv
+RUN pipenv install --dev --system --deploy
+
+RUN python manage.py collectstatic
+
+# Step 2: Put statics where they can be served by Nginx
+FROM nginx:1.17-alpine
+COPY --from=static-collector /usr/app/static /usr/share/nginx/html/django-static

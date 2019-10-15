@@ -13,10 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
+
 from django.conf import settings
 from django.contrib import admin
-from django.urls import include, path
-
+from django.urls import include, path, re_path
 from kube_django.views import health
 
 admin.site.site_title = "Kube Django Site Admin"
@@ -40,3 +41,6 @@ if settings.DEBUG:
         + static(settings.MEDIA_URL_PATH, document_root=settings.MEDIA_ROOT)
         + urlpatterns
     )
+
+if os.environ.get("APP_ENV") == "prod":
+    urlpatterns = [re_path(r"^api/", include(urlpatterns))]

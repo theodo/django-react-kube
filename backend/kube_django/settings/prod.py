@@ -63,9 +63,6 @@ CACHES = {
     }
 }
 
-# Static files
-STATICFILES_STORAGE = "core.storage.ManifestStorage"
-
 # Sentry
 if "SENTRY_DSN" in os.environ:
     import sentry_sdk
