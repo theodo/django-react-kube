@@ -28,19 +28,11 @@ module.exports = {
             seed,
           ),
       }),
-    )
+    );
 
-    switch (env) {
-      case "development":
-        config.output.publicPath = "http://localhost:3000/"
-        break
-      case "production":
-        config.output.publicPath = "/static/front/"
-        break
-      default:
-        break
+    if (env == 'development') {
+      config.output.publicPath = 'http://localhost:3000/';
     }
-
 
     return config;
   },
